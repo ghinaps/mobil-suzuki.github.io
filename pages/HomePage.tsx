@@ -45,18 +45,20 @@ const HomePage: React.FC = () => {
       }}
     >
       {/* ================= HERO ================= */}
-      <section className="relative h-[60vh] md:h-[80vh] bg-black text-white overflow-hidden">
+      <section className="relative min-h-[70svh] md:min-h-[80vh] bg-black text-white overflow-hidden">
         {HERO_SLIDES.map((slide, index) => (
           <div
             key={index}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
               index === currentSlide ? "opacity-100" : "opacity-0"
             }`}
             style={{ backgroundImage: `url(${slide.image})` }}
           >
+            {/* OVERLAY */}
             <div className="absolute inset-0 bg-black/60"></div>
 
-            <div className="relative container mx-auto px-6 h-full flex items-center">
+            {/* CONTENT */}
+            <div className="relative container mx-auto px-6 min-h-[70svh] md:min-h-[80vh] flex items-center">
               <div
                 className={`max-w-2xl transition-all duration-700 ${
                   index === currentSlide
@@ -64,10 +66,10 @@ const HomePage: React.FC = () => {
                     : "opacity-0 translate-y-6"
                 }`}
               >
-                <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-4">
                   {slide.title}
                 </h1>
-                <p className="text-lg md:text-xl text-gray-200 mb-8">
+                <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-8">
                   {slide.subtitle}
                 </p>
                 <button
@@ -84,13 +86,13 @@ const HomePage: React.FC = () => {
         {/* NAVIGATION */}
         <button
           onClick={goToPrevSlide}
-          className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-xl"
+          className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-xl z-10"
         >
           ‹
         </button>
         <button
           onClick={goToNextSlide}
-          className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-xl"
+          className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-xl z-10"
         >
           ›
         </button>
