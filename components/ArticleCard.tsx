@@ -1,7 +1,6 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Article } from '../types';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Article } from "../types";
 
 interface ArticleCardProps {
   article: Article;
@@ -9,17 +8,45 @@ interface ArticleCardProps {
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-      <img className="w-full h-48 object-cover" src={article.imageUrl} alt={article.title} />
+    <div className="group bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+      {/* Image */}
+      <div className="relative overflow-hidden">
+        <img
+          src={article.imageUrl}
+          alt={article.title}
+          className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
+        {/* Badge */}
+        <span className="absolute top-3 left-3 bg-suzukiRed text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+          Artikel
+        </span>
+      </div>
+
+      {/* Content */}
       <div className="p-6">
-        <h3 className="text-lg font-bold text-gray-900 h-14 overflow-hidden">{article.title}</h3>
-        <p className="text-gray-600 mt-2 h-20 overflow-hidden">{article.excerpt}</p>
-        <Link 
-          to={`/article/${article.id}`}
-          className="mt-4 inline-block text-suzukiRed font-semibold hover:text-red-700"
-        >
-          Baca Selengkapnya &rarr;
-        </Link>
+        {/* Title */}
+        <h3 className="text-lg font-bold text-gray-900 line-clamp-2 min-h-[3rem]">
+          {article.title}
+        </h3>
+
+        {/* Excerpt */}
+        <p className="text-gray-600 mt-3 text-sm line-clamp-3 min-h-[4.5rem]">
+          {article.excerpt}
+        </p>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between mt-5">
+          <span className="text-xs text-gray-400">📅 {article.date}</span>
+
+          <Link
+            to={`/article/${article.id}`}
+            className="text-suzukiRed font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all"
+          >
+            Baca Selengkapnya
+            <span className="text-lg">→</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

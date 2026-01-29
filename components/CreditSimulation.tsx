@@ -1,104 +1,149 @@
 import React, { useState } from "react";
 
 const CreditSimulation: React.FC = () => {
-  const [price, setPrice] = useState(300000000);
-  const [dp, setDp] = useState(60000000);
-  const [tenor, setTenor] = useState(60);
-  const [interest, setInterest] = useState(6);
+  const [hargaMobil, setHargaMobil] = useState("");
+  const [dp, setDp] = useState("");
+  const [interest, setInterest] = useState("6");
+  const [tenor, setTenor] = useState("3");
 
-  const loanAmount = price - dp;
-  const monthlyInterest = interest / 100 / 12;
-  const monthlyInstallment =
-    (loanAmount * monthlyInterest) /
-    (1 - Math.pow(1 + monthlyInterest, -tenor));
+  const harga = Number(hargaMobil) || 0;
+  const uangMuka = Number(dp) || 0;
+  const bungaTahunan = Number(interest) / 100 || 0;
+  const lamaTenor = Number(tenor) || 0;
+
+  const pokokPinjaman = Math.max(harga - uangMuka, 0);
+  const totalBunga = pokokPinjaman * bungaTahunan * lamaTenor;
+  const totalPinjaman = pokokPinjaman + totalBunga;
+  const cicilanBulanan = lamaTenor > 0 ? totalPinjaman / (lamaTenor * 12) : 0;
+
+  const rupiah = (value: number) =>
+    value.toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    });
+
+  const sendToWhatsApp = () => {
+    const message = `
+Simulasi Kredit Suzuki
+
+Harga Mobil: ${rupiah(harga)}
+DP: ${rupiah(uangMuka)}
+Tenor: ${lamaTenor} Tahun
+Bunga: ${interest}% / Tahun
+
+Cicilan / Bulan:
+${rupiah(cicilanBulanan)}
+
+Mohon info unit & promo terbaik.
+    `;
+
+    window.open(
+      `https://wa.me/6281318229451?text=${encodeURIComponent(message)}`,
+      "_blank",
+    );
+  };
 
   return (
     <section
-      id="simulasi"
-      className="py-16 bg-white/90 backdrop-blur rounded-xl m-4"
+      id="simulasi-kredit"
+      className="py-20 bg-gradient-to-br from-slate-100 to-slate-200"
     >
-      <div className="container mx-auto px-6 max-w-3xl">
-        <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-8">
-          Simulasi Kredit Suzuki
-        </h2>
+      <div className="max-w-4xl mx-auto px-6">
+        {/* HEADER */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-extrabold text-suzukiBlue mb-3">
+            Simulasi Kredit Suzuki
+          </h2>
+          <p className="text-gray-600">
+            Estimasi cicilan mobil dengan bunga tahunan
+          </p>
+        </div>
 
-        <div className="grid gap-6">
-          {/* Harga Mobil */}
-          <div>
-            <label className="block font-medium mb-1">Harga Mobil</label>
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-full border rounded-lg px-4 py-2"
-            />
+        {/* CARD */}
+        <div className="bg-white/90 backdrop-blur rounded-2xl shadow-xl p-8">
+          {/* FORM */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Harga */}
+            <div>
+              <label className="block mb-2 text-sm font-semibold text-gray-700">
+                Harga Mobil
+              </label>
+              <input
+                type="number"
+                placeholder="250000000"
+                value={hargaMobil}
+                onChange={(e) => setHargaMobil(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-suzukiBlue outline-none"
+              />
+            </div>
+
+            {/* DP */}
+            <div>
+              <label className="block mb-2 text-sm font-semibold text-gray-700">
+                DP (Uang Muka)
+              </label>
+              <input
+                type="number"
+                placeholder="50000000"
+                value={dp}
+                onChange={(e) => setDp(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-suzukiBlue outline-none"
+              />
+            </div>
+
+            {/* Bunga */}
+            <div>
+              <label className="block mb-2 text-sm font-semibold text-gray-700">
+                Bunga / Tahun (%)
+              </label>
+              <input
+                type="number"
+                value={interest}
+                onChange={(e) => setInterest(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-suzukiBlue outline-none"
+              />
+            </div>
+
+            {/* Tenor */}
+            <div>
+              <label className="block mb-2 text-sm font-semibold text-gray-700">
+                Tenor
+              </label>
+              <select
+                value={tenor}
+                onChange={(e) => setTenor(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-suzukiBlue outline-none"
+              >
+                <option value="1">1 Tahun</option>
+                <option value="2">2 Tahun</option>
+                <option value="3">3 Tahun</option>
+                <option value="4">4 Tahun</option>
+                <option value="5">5 Tahun</option>
+              </select>
+            </div>
           </div>
 
-          {/* DP */}
-          <div>
-            <label className="block font-medium mb-1">DP</label>
-            <input
-              type="number"
-              value={dp}
-              onChange={(e) => setDp(Number(e.target.value))}
-              className="w-full border rounded-lg px-4 py-2"
-            />
-          </div>
-
-          {/* Tenor */}
-          <div>
-            <label className="block font-medium mb-1">Tenor (bulan)</label>
-            <select
-              value={tenor}
-              onChange={(e) => setTenor(Number(e.target.value))}
-              className="w-full border rounded-lg px-4 py-2"
-            >
-              {[12, 24, 36, 48, 60].map((t) => (
-                <option key={t} value={t}>
-                  {t} bulan
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Bunga */}
-          <div>
-            <label className="block font-medium mb-1">
-              Bunga per tahun (%)
-            </label>
-            <input
-              type="number"
-              value={interest}
-              onChange={(e) => setInterest(Number(e.target.value))}
-              className="w-full border rounded-lg px-4 py-2"
-            />
-          </div>
-
-          {/* HASIL */}
-          <div className="bg-suzukiBlue text-white p-6 rounded-xl text-center">
-            <p className="text-sm">Estimasi Cicilan / Bulan</p>
-            <p className="text-3xl font-bold mt-2">
-              Rp {Math.round(monthlyInstallment).toLocaleString("id-ID")}
+          {/* RESULT */}
+          <div className="mt-10 bg-gradient-to-r from-suzukiBlue to-blue-900 text-white rounded-xl p-8 text-center">
+            <p className="uppercase tracking-widest text-sm opacity-80">
+              Cicilan Per Bulan
+            </p>
+            <p className="text-4xl font-extrabold mt-3">
+              {rupiah(cicilanBulanan)}
+            </p>
+            <p className="text-xs opacity-70 mt-2">
+              *Estimasi, dapat berbeda dengan persetujuan leasing
             </p>
           </div>
 
           {/* CTA */}
-          <a
-            href={`https://wa.me/6281318229451?text=${encodeURIComponent(
-              `Halo, saya ingin simulasi kredit Suzuki.\n\nHarga: Rp ${price.toLocaleString(
-                "id-ID",
-              )}\nDP: Rp ${dp.toLocaleString(
-                "id-ID",
-              )}\nTenor: ${tenor} bulan\nCicilan: Rp ${Math.round(
-                monthlyInstallment,
-              ).toLocaleString("id-ID")}`,
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-500 hover:bg-green-600 text-white text-center py-3 rounded-lg font-semibold transition"
+          <button
+            onClick={sendToWhatsApp}
+            className="mt-10 w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg"
           >
-            Kirim ke WhatsApp
-          </a>
+            Konsultasi via WhatsApp
+          </button>
         </div>
       </div>
     </section>

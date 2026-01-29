@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
               Artikel
             </button>
             <button
-              onClick={() => handleScroll("simulasi")}
+              onClick={() => handleScroll("simulasi-kredit")}
               className={navClass}
             >
               Simulasi Kredit
@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
               Artikel
             </button>
             <button
-              onClick={() => handleScroll("simulasi")}
+              onClick={() => handleScroll("simulasi-kredit")}
               className="block w-full text-left px-4 py-3 text-gray-200 hover:bg-white/10 transition"
             >
               Simulasi Kredit

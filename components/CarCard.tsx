@@ -19,7 +19,7 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
     car.variants.length > 0 ? Math.min(...car.variants.map((v) => v.price)) : 0;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
       <img
         className="w-full h-56 object-cover"
         src={car.image}

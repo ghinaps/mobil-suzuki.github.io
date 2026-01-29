@@ -38,12 +38,13 @@ const HomePage: React.FC = () => {
   return (
     <div
       id="home"
+      className="bg-gray-100"
       style={{
         backgroundImage:
           "url('https://www.toptal.com/designers/subtlepatterns/uploads/light-grey-terrazzo.png')",
       }}
     >
-      {/* ================= HERO / HOME ================= */}
+      {/* ================= HERO ================= */}
       <section className="relative h-[60vh] md:h-[80vh] bg-black text-white overflow-hidden">
         {HERO_SLIDES.map((slide, index) => (
           <div
@@ -52,56 +53,59 @@ const HomePage: React.FC = () => {
               index === currentSlide ? "opacity-100" : "opacity-0"
             }`}
             style={{ backgroundImage: `url(${slide.image})` }}
-            aria-hidden={index !== currentSlide}
           >
-            <div className="absolute inset-0 bg-black/50"></div>
+            <div className="absolute inset-0 bg-black/60"></div>
 
             <div className="relative container mx-auto px-6 h-full flex items-center">
               <div
-                className={`transition-all duration-700 ${
+                className={`max-w-2xl transition-all duration-700 ${
                   index === currentSlide
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-6"
                 }`}
               >
-                <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
+                <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">
                   {slide.title}
                 </h1>
-                <p className="text-lg md:text-xl max-w-2xl mb-8">
+                <p className="text-lg md:text-xl text-gray-200 mb-8">
                   {slide.subtitle}
                 </p>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="bg-suzukiRed px-8 py-3 rounded-md font-bold hover:bg-red-700 transition"
+                  className="bg-suzukiRed px-8 py-3 rounded-md font-semibold hover:bg-red-700 transition"
                 >
-                  Jadwalkan Test Drive
+                  Ajukan Test Drive Sekarang
                 </button>
               </div>
             </div>
           </div>
         ))}
 
-        {/* ARROWS */}
+        {/* NAVIGATION */}
         <button
           onClick={goToPrevSlide}
-          className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/40 p-2 rounded-full"
+          className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-xl"
         >
           ‹
         </button>
         <button
           onClick={goToNextSlide}
-          className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/40 p-2 rounded-full"
+          className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-xl"
         >
           ›
         </button>
       </section>
 
       {/* ================= PRODUK ================= */}
-      <section id="produk" className="py-16">
+      <section id="produk" className="py-20">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-12">
-            Produk Unggulan Kami
+          <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-4">
+            Produk Unggulan Suzuki
           </h2>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            Temukan berbagai pilihan mobil Suzuki dengan desain modern, performa
+            tangguh, dan efisiensi terbaik untuk kebutuhan Anda.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {CARS.map((car) => (
               <CarCard key={car.id} car={car} />
@@ -111,14 +115,15 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ================= TESTIMONI ================= */}
-      <section
-        id="testimoni"
-        className="py-16 bg-white/80 backdrop-blur-sm rounded-xl m-4"
-      >
+      <section id="testimoni" className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-12">
-            Apa Kata Mereka?
+          <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-4">
+            Testimoni Pelanggan
           </h2>
+          <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
+            Kepuasan pelanggan adalah prioritas kami dalam memberikan layanan
+            terbaik.
+          </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {TESTIMONIALS.map((t) => (
               <TestimonialCard key={t.name} testimonial={t} />
@@ -128,11 +133,15 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ================= ARTIKEL ================= */}
-      <section id="artikel" className="py-16">
+      <section id="artikel" className="py-20">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-12">
-            Artikel & Tips Terbaru
+          <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-4">
+            Artikel & Informasi Terbaru
           </h2>
+          <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
+            Dapatkan tips otomotif, promo terbaru, dan informasi menarik seputar
+            mobil Suzuki.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {ARTICLES.map((article) => (
               <ArticleCard key={article.id} article={article} />
@@ -142,17 +151,21 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ================= VIDEO ================= */}
-      <section
-        id="video"
-        className="py-16 bg-white/80 backdrop-blur-sm rounded-xl m-4"
-      >
+      <section id="video" className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-12">
-            Video Review
+          <h2 className="text-3xl font-bold text-center text-suzukiBlue mb-4">
+            Video Review & Test Drive
           </h2>
+          <p className="text-center text-gray-600 mb-12 max-w-xl mx-auto">
+            Saksikan ulasan lengkap dan pengalaman berkendara langsung dari
+            berbagai model Suzuki.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {VIDEOS.map((video) => (
-              <div key={video.title} className="rounded-lg overflow-hidden">
+              <div
+                key={video.title}
+                className="rounded-lg overflow-hidden shadow-md bg-white"
+              >
                 <div className="relative pb-[56.25%]">
                   <iframe
                     src={video.embedUrl}
